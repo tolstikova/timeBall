@@ -8,7 +8,9 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "prettier-watch": "npx onchange '**/*.js' -- prettier --write {{changed}}"
+    "prettier-watch": "npx onchange '**/*.js' -- prettier --write {{changed}}",
+    "apptoipa": "chmod +x scripts/apptoipa.sh && scripts/apptoipa.sh ios/build/timeBall/Build/Products/Debug-iphonesimulator/timeBall.app timeBallIPA",
+    "makeApk": "chmod +x scripts/makeApk.sh && scripts/makeApk.sh android/app/build/outputs/apk/debug/app-debug.apk ./"
   },
   "dependencies": {
     "react": "16.9.0",
