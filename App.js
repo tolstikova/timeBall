@@ -16,18 +16,19 @@ import {
   StatusBar,
 } from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import Colors from 'themes/Colors';
+import { TimeBall } from 'components';
 
 const App = () => (
   <View style={styles.primary}>
-    <Text>qweqwe</Text>
+    <TimeBall />
   </View>
 );
 
 const styles = StyleSheet.create({
   primary: {
     flex: 1,
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.whiteGray
   },
 });
 
