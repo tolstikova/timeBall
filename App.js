@@ -18,10 +18,12 @@ import {
 
 import Colors from 'themes/Colors';
 import { TimeBall } from 'components';
+import Example from "./src/PanExample";
 
 const App = () => (
   <View style={styles.primary}>
     <TimeBall />
+    <Example />
   </View>
 );
 
