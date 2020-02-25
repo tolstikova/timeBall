@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, PanResponder, I18nManager } from 'react-native';
+import { StyleSheet, View, PanResponder, I18nManager, Text } from 'react-native';
 
 import { ScrollView } from 'react-native-gesture-handler';
-import Colors from 'themes/Colors';
+import Colors from 'src/themes/Colors';
 // import { DraggableBox } from '../draggable';
 // import { LoremIpsum } from '../common';
 
@@ -18,9 +18,9 @@ class PanResponderExample extends Component {
   componentWillMount() {
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
-      onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
+      // onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
       onPanResponderGrant: this._handlePanResponderGrant,
-      onPanResponderMove: this._handlePanResponderMove,
+      // onPanResponderMove: this._handlePanResponderMove,
       onPanResponderRelease: this._handlePanResponderEnd,
       onPanResponderTerminate: this._handlePanResponderEnd,
     });
@@ -33,6 +33,13 @@ class PanResponderExample extends Component {
         backgroundColor: Colors.pink,
       },
     };
+    this._numberStyles = {
+      style: {
+        left: this._previousLeft,
+        top: this._previousTop,
+        fontSize: 8,
+      },
+    };
   }
 
   componentDidMount() {
@@ -41,28 +48,39 @@ class PanResponderExample extends Component {
 
   render() {
     return (
-      <View
-        ref={circle => {
-          this.circle = circle;
+      <Text
+        ref={numbers => {
+          this.numbers = numbers;
         }}
-        style={styles.circle}
+        style={styles.numbers}
         {...this._panResponder.panHandlers}
-      />
+      >{this.props.timeNumber}</Text>
     );
   }
 
-  _highlight = () => {
-    this._circleStyles.style.backgroundColor = Colors.whiteGray;
+  // _highlight = () => {
+  //   this._circleStyles.style.backgroundColor = Colors.whiteGray;
+  //   this._updateNativeStyles();
+  // };
+
+  _scale = () => {
+    this._numberStyles.style.fontSize = 20;
     this._updateNativeStyles();
   };
 
-  _unHighlight = () => {
-    this._circleStyles.style.backgroundColor = Colors.pink;
+  _unScale = () => {
+    this._numberStyles.style.fontSize = 8;
     this._updateNativeStyles();
   };
+
+  // _unHighlight = () => {
+  //   this._circleStyles.style.backgroundColor = Colors.pink;
+  //   this._updateNativeStyles();
+  // };
 
   _updateNativeStyles = () => {
-    this.circle && this.circle.setNativeProps(this._circleStyles);
+    // this.circle && this.circle.setNativeProps(this._circleStyles);
+    this.numbers && this.numbers.setNativeProps(this._numberStyles);
   };
 
   _handleStartShouldSetPanResponder = (e, gestureState) => {
@@ -76,19 +94,19 @@ class PanResponderExample extends Component {
   };
 
   _handlePanResponderGrant = (e, gestureState) => {
-    this._highlight();
+    this._scale();
   };
 
-  _handlePanResponderMove = (e, gestureState) => {
-    this._circleStyles.style.left = this._previousLeft + gestureState.dx * (I18nManager.isRTL ? -1 : 1);
-    this._circleStyles.style.top = this._previousTop + gestureState.dy;
-    this._updateNativeStyles();
-  };
+  // _handlePanResponderMove = (e, gestureState) => {
+  //   this._numberStyles.style.left = this._previousLeft + gestureState.dx * (I18nManager.isRTL ? -1 : 1);
+  //   this._numberStyles.style.top = this._previousTop + gestureState.dy;
+  //   this._updateNativeStyles();
+  // };
 
   _handlePanResponderEnd = (e, gestureState) => {
-    this._unHighlight();
-    this._previousLeft += gestureState.dx * (I18nManager.isRTL ? -1 : 1);
-    this._previousTop += gestureState.dy;
+    this._unScale();
+    // this._previousLeft += gestureState.dx * (I18nManager.isRTL ? -1 : 1);
+    // this._previousTop += gestureState.dy;
   };
 }
 
@@ -98,12 +116,11 @@ export default class Example extends Component {
   };
   render() {
     return (
-      <ScrollView
-        waitFor={['dragbox', 'image_pinch', 'image_rotation', 'image_tilt']}
+      <View
         style={styles.scrollView}>
 
         <PanResponderExample />
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -119,4 +136,7 @@ const styles = StyleSheet.create({
     borderRadius: CIRCLE_SIZE / 2,
     zIndex: 100,
   },
+  numbers: {
+    zIndex: 100,
+  }
 });

@@ -18,17 +18,21 @@ import {
 
 import Colors from 'themes/Colors';
 import { TimeBall } from 'components';
-import Example from "./src/PanExample";
+import Shadow from "./src/components/Shadow";
+import { BlurView } from 'react-native-blur';
+import Cursor from "./src/components/Cursor";
 
 const App = () => (
-  <View style={styles.primary}>
-    <TimeBall />
-    <Example />
-  </View>
+  <SafeAreaView style={styles.primary}>
+
+    <Shadow />
+
+  </SafeAreaView>
 );
 
 const styles = StyleSheet.create({
   primary: {
+    alignItems: 'center',
     flex: 1,
     backgroundColor: Colors.whiteGray
   },
