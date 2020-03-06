@@ -5143,6 +5143,11 @@ react-native-neomorph-shadows@0.0.6:
   resolved "https://registry.yarnpkg.com/react-native-neomorph-shadows/-/react-native-neomorph-shadows-0.0.6.tgz#178c793172c9df7af106447469bef3b5955e095d"
   integrity sha512-sU7cC/auJI4EbSJl32Hd2X5652O8Q25117z6dmNrvdo7eLAIVlodHK/E9GxwHnLGBABCopAKqEDKmAZwVgiarQ==
 
+react-native-reanimated@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.7.0.tgz#896db2576552ac59d288a1f6c7f00afc171f240c"
+  integrity sha512-FQWSqP605eQVJumuK2HpR+7heF0ZI+qfy4jNguv3Xv8nPFHeIgZaRTXHCEQL2AcuSIj50zy8jGJf5l134QMQWQ==
+
 react-native-shadow@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/react-native-shadow/-/react-native-shadow-1.2.2.tgz#08991cd14b71e32f2fc6363911c139d231949a66"

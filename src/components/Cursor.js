@@ -1,54 +1,77 @@
-import React, {Component, useState} from 'react'
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Image,
-  TouchableHighlight,
-  Animated
-} from 'react-native'
-
-import { PanGestureHandler} from 'react-native-gesture-handler';
-import { polarToCartesian } from '../helpers/F'
-import Slider from "./Slider";
+import React, { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import {atan2, polarToCartesian} from "../helpers/F";
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import Animated, { Value, event, block, cond, eq, set, add, sub, multiply, sin, cos, debug } from 'react-native-reanimated';
 
 
-// ====IN PROGRESS==== //
+export default ({ radius, style, getAngle }) => {
+  // const start = polarToCartesian(angle*2, angle*2, radius, angle);
+  // const end = polarToCartesian(cx, cy, radius, start_angle);
 
-const Cursor = ({ windowWidth, cx, cy, radius, end_angle }) => {
-  const _touchX = new Animated.Value(windowWidth / 2 - radius);
-  const _onPanGestureEvent = Animated.event([{nativeEvent: {x: _touchX}}], { useNativeDriver: true });
+  // console.log(angle);
+  const angle = new Value(0);
+  const α = new Value(0);
+  const x = new Value(0);
+  const y = new Value(0);
+  const xOffset = new Value(0);
+  const yOffset = new Value(0);
+  const translateX = new Value(0);
+  const translateY = new Value(0);
+  const translationX = new Value(0);
+  const translationY = new Value(0);
+  const state = new Value(State.UNDETERMINED);
+  const onGestureEvent = event(
+    [
+      {
+        nativeEvent: {
+          translationX,
+          translationY,
+          state,
+        },
+      },
+    ],
+  );
+
+  // useEffect(() => {
+  //   getAngle(() => '555');
+  // });
 
   return (
-    <PanGestureHandler
-      onGestureEvent={_onPanGestureEvent}>
-      <Animated.View style={{
-        height: 150,
-        justifyContent: 'center',
-      }}>
+    <View style={style}>
+      <Animated.Code>
+        {
+          () => block([
+            cond(eq(state, State.ACTIVE), [
+              set(x, add(xOffset, translationX)),
+              set(y, add(yOffset, translationY)),
+            ]),
+            cond(eq(state, State.END), [
+              set(xOffset, x),
+              set(yOffset, y),
+            ]),
+            set(α, atan2(add(multiply(y, -1), radius), sub(x, radius))),
+            set(angle, α),
+            set(translateX, add(multiply(radius, cos(α)), radius)),
+            set(translateY, add(multiply(-1 * radius, sin(α)), radius)),
+          ])
+        }
+      </Animated.Code>
+      <PanGestureHandler onHandlerStateChange={onGestureEvent} {...{ onGestureEvent }}>
         <Animated.View
-          style={[{
-            backgroundColor: '#42a5f5',
-            borderRadius: radius,
-            height: radius * 2,
-            width: radius * 2,
-          }, {
-            transform: [{translateX: Animated.add(_touchX, new Animated.Value(-radius))}]
-          }]}
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            backgroundColor: "white",
+            width: 24,
+            height: 24,
+            borderRadius: 12,
+            transform: [
+              { translateX },
+              { translateY },
+            ],
+          }}
         />
-      </Animated.View>
-    </PanGestureHandler>
+      </PanGestureHandler>
+    </View>
   );
-};
-
-export default Cursor;
-
-Cursor.defaultProps = {
-  windowWidth: 250,
-  cx: 250,
-  cy: 250,
-  radius: 10,
-  start_angle: 0,
-  end_angle: 160,
 };

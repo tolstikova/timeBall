@@ -1,17 +1,28 @@
-import React, {Component} from 'react'
-import { View } from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
 import { NeomorphBox } from 'react-native-neomorph-shadows';
 import Dots from "./Dots";
 import Slider from "./Slider";
+import Cursor from "./Cursor";
+import {Value} from "react-native-reanimated";
 
 const SCALE = 1.8;
 const INNER_SCALE = 2.8;
 const OUT_SCALE = 1.8;
 
 
-export default class Shadow extends Component {
+export default () => {
+  const start = 80;
+  // const start_angle = new Value(0);
+  // const [angle, setAngle] = useState(start_angle);
 
-render () {
+  // useEffect(() => {
+  //   console.log(start_angle);
+  //   start_angle.setValue(100);
+  // });
+
+
+
     return (
       <View style={{ paddingVertical: 100 }}>
         <NeomorphBox
@@ -48,7 +59,26 @@ render () {
                 alignItems: 'center'
               }}
             >
-              <Slider />
+              <Slider
+                radius={160}
+                start_angle={0}
+                end_angle={150}
+              />
+
+              <Cursor
+                radius={150}
+                getAngle={(v) => console.log(v)}
+                style={{
+                  position: 'absolute',
+                  zIndex: 5,
+                  top: -22,
+                  left: -22,
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              />
+
+
               <NeomorphBox
                 inner
                 style={{
@@ -65,7 +95,6 @@ render () {
         <Dots numberDots={12} radius={180} unit={30} />
       </View>
     )
-  }
 }
 
 
