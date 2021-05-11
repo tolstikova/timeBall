@@ -13,7 +13,7 @@
     "makeApk": "chmod +x scripts/makeApk.sh && scripts/makeApk.sh android/app/build/outputs/apk/debug/app-debug.apk ./"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-blur": "^3.2.2",
